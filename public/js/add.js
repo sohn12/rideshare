@@ -12,6 +12,7 @@ async function addDriver(e) {
 
   const sendBody = {
     driverId: driverId.value,
+    driverName: driverName.value,
     address: driverAddress.value
   };
 

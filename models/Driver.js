@@ -9,6 +9,10 @@ const DriverSchema = new mongoose.Schema({
     trim: true,
     maxlength: [10, 'driver ID must be less than 10 chars']
   },
+  driverName: {
+    type: String,
+    required: [true, 'Please add a driver name']
+  },
   address: {
     type: String,
     required: [true, 'Please add an address']
