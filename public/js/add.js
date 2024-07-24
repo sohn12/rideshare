@@ -1,12 +1,13 @@
 const driverForm = document.getElementById('driver-form');
 const driverId = document.getElementById('driver-id');
 const driverAddress = document.getElementById('driver-address');
+const driverName = document.getElementById('driver-name');
 
 // Send POST to API to add driver
 async function addDriver(e) {
   e.preventDefault();
 
-  if (driverId.value === '' || driverAddress.value === '') {
+  if (driverId.value === '' || driverName.value === '' || driverAddress.value === '') {
     alert('Please fill in fields');
   }
 
