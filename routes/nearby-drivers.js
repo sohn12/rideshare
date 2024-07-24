@@ -14,24 +14,27 @@ router.get("/:userId", async (req, res) => {
         .status(404)
         .json({ message: "User or user location not found" });
     }
+    console.log(user)
 
     const userLocation = user.location.coordinates;
 
     // Define the maximum distance (in meters)
-    const maxDistance = 5000;
+    const maxDistance = 1000;
 
     // Find nearby drivers using $near query
-    const nearbyDrivers = await Driver.find({
-      location: {
-        $near: {
-          $geometry: {
-            type: "Point",
-            coordinates: userLocation,
+    const nearbyDrivers = await Driver.aggregate([
+      {
+        $geoNear: {
+          near: {
+            type: 'Point',
+            coordinates: userLocation
           },
-          $maxDistance: maxDistance,
-        },
-      },
-    });
+          distanceField: 'distance',
+          maxDistance: maxDistance,
+          spherical: true
+        }
+      }
+    ]);
 
     res.json({ nearbyDrivers });
   } catch (error) {

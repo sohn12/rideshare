@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/drivers', require('./routes/drivers'));
 app.use('/api/v1/rides', require('./routes/rides'));
 app.use('/api/v1/users', require('./routes/users'));
-app.use('api/v1/nearby-drivers', require('./routes/nearby-drivers'));
+app.use('/api/v1/nearby-drivers', require('./routes/nearby-drivers'));
 
 const PORT = process.env.PORT || 5000;
 
