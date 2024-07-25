@@ -58,7 +58,7 @@ async function logIn(userId, isDriver) {
       setUserCookie(user.driverId, user.name, true, 1);
     } else {
       const {user} = data;
-      setUserCookie(user.userId, user.name,false, 1);
+      setUserCookie(user._id, user.name,false, 1);
     }
     onLoad();
   } catch (error) {}
