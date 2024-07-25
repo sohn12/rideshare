@@ -40,7 +40,7 @@ exports.addUser = async (req, res, next) => {
 };
 
 // @desc Update user location
-// @route PUT /api/v1/users/updateLocation/:userId
+// @route PUT /api/v1/users/:userId/updateLocation
 // @access Public
 exports.updateLocation = async (req, res, next) => {
   try {

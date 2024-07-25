@@ -7,7 +7,8 @@ router
   .route('/')
   .get(getDrivers)
   .post(addDriver);
+
 router
-  .route('/updateLocation/:driverId')
+  .route(':driverId/updateLocation')
   .put(updateLocation);
 module.exports = router;

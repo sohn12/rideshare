@@ -40,7 +40,7 @@ exports.addDriver = async (req, res, next) => {
 };
 
 // @desc Update driver location
-// @route PUT /api/v1/drivers/updateLocation/:driverId
+// @route PUT /api/v1/drivers/:driverId/updateLocation
 // @access Public
 exports.updateLocation = async (req, res, next) => {
   try {

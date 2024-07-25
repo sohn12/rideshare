@@ -22,6 +22,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
+app.use('/api/v1/login', require('./routes/login'));
 app.use('/api/v1/drivers', require('./routes/drivers'));
 app.use('/api/v1/rides', require('./routes/rides'));
 app.use('/api/v1/users', require('./routes/users'));
