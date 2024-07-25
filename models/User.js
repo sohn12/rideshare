@@ -34,6 +34,20 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
+UserSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    delete ret.address;
+    return ret;
+  }
+});
+
+UserSchema.set('toObject', {
+  transform: function (doc, ret, options) {
+    delete ret.address;
+    return ret;
+  }
+});
+
 // Geocode & create location
 UserSchema.pre('save', async function(next) {
   const loc = await geocoder.geocode(this.address);

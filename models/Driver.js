@@ -34,6 +34,20 @@ const DriverSchema = new mongoose.Schema({
   }
 });
 
+DriverSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    delete ret.address;
+    return ret;
+  }
+});
+
+DriverSchema.set('toObject', {
+  transform: function (doc, ret, options) {
+    delete ret.address;
+    return ret;
+  }
+});
+
 // Geocode & create location
 DriverSchema.pre('save', async function(next) {
   const loc = await geocoder.geocode(this.address);
