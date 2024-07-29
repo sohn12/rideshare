@@ -12,6 +12,7 @@ function setUserCookie(userid, username, isDriver, days) {
   setCookie("userid", userid, days);
   setCookie("username", username, days);
   setCookie("isDriver", isDriver, days);
+  setCookie("isAdmin", false, days);
 }
 
 function getCookie(name) {
@@ -29,18 +30,16 @@ function getUserCookie() {
   const userid = getCookie("userid");
   const username = getCookie("username");
   const isDriver = getCookie("isDriver");
-  return { userid, username, isDriver };
+  const isAdmin = getCookie("isAdmin");
+  return { userid, username, isDriver, isAdmin };
 }
 
 function logOut() {
   setCookie("username", "", -1);
   setCookie("userid", "", -1);
   setCookie("isDriver", "", -1);
+  setCookie("isAdmin", "", -1);
   onLoad();
-}
-
-function isDriver() {
-  return getCookie("isDriver");
 }
 
 async function logIn(userId, isDriver) {
@@ -68,6 +67,16 @@ async function logIn(userId, isDriver) {
   } catch (error) {}
 }
 
+function updateLocation () {
+  const cookie = getUserCookie();
+  if(cookie.isDriver) {
+    window.location.href = "update-driver-location.html";
+  }
+  else {
+    window.location.href = "update-user-location.html";
+  }
+}
+
 function onLoad() {
   const cookie = getUserCookie();
   const loginButton = document.getElementById("login-button");
@@ -85,6 +94,19 @@ function onLoad() {
       window.location.href = "/login.html";
     loginButton.classList.remove("d-none");
     logoutButton.classList.add("d-none");
+  }
+
+  if (cookie.isDriver) {
+    document.getElementById("findNearByDrivers").style.display="none";
+  }
+
+  if(cookie.isAdmin == true) {
+    document.getElementById("addDriver").style.display="inline-block";
+    document.getElementById("addUser").style.display="inline-block";
+  }
+  else {
+    document.getElementById("addDriver").style.display="none";
+    document.getElementById("addUser").style.display="none";
   }
 }
 

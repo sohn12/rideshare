@@ -18,7 +18,42 @@ function getCookie(name) {
   return null;
 }
 
+function setCookie(name, value, days) {
+  let expires = "";
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function logOut() {
+  setCookie("username", "", -1);
+  setCookie("userid", "", -1);
+  setCookie("isDriver", "", -1);
+  setCookie("isAdmin", "", -1);
+  window.location.href="login.html"
+}
+
+function updateLocation () {
+  if(getCookie("isDriver")) {
+    window.location.href = "update-driver-location.html";
+  }
+  else {
+    window.location.href = "update-user-location.html";
+  }
+}
+
 async function getNearbyDrivers() {
+  if(getCookie("isAdmin") == true) {
+    document.getElementById("addDriver").style.display="inline-block";
+    document.getElementById("addUser").style.display="inline-block";
+  }
+  else {
+    document.getElementById("addDriver").style.display="none";
+    document.getElementById("addUser").style.display="none";
+  }
   const userid = getCookie("userid");
   if(!userid) {
     alert("user not logged in");
