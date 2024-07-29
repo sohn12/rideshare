@@ -63,7 +63,7 @@ exports.updateLocation = async (req, res, next) => {
     };
 
     const driver = await Driver.findOneAndUpdate(
-      { driverId },
+      { _id: driverId },
       { location, address }, // Set the new location and address
       { new: true, runValidators: true }
     );

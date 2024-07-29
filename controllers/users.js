@@ -46,7 +46,7 @@ exports.updateLocation = async (req, res, next) => {
   try {
     const { userId } = req.params;
     const { address } = req.body;
-console.log("userId is ",userId);
+    console.log("userId is ",userId);
     if (!address) {
       return res.status(400).json({ error: 'Please provide an address' });
     }
@@ -63,7 +63,7 @@ console.log("userId is ",userId);
     };
 
     const user = await User.findOneAndUpdate(
-      { userId },
+      { _id: userId },
       { location, address }, // Set the new location and address
       { new: true, runValidators: true }
     );

@@ -39,6 +39,10 @@ function logOut() {
   onLoad();
 }
 
+function isDriver() {
+  return getCookie("isDriver");
+}
+
 async function logIn(userId, isDriver) {
   try {
     const res = await fetch("/api/v1/login", {
@@ -55,10 +59,10 @@ async function logIn(userId, isDriver) {
     const data = await res.json();
     if(isDriver) {
       const user = data.driver;
-      setUserCookie(user.driverId, user.name, true, 1);
+      setUserCookie(user._id, user.name, true, 1);
     } else {
       const {user} = data;
-      setUserCookie(user._id, user.name,false, 1);
+      setUserCookie(user._id, user.name, false, 1);
     }
     onLoad();
   } catch (error) {}

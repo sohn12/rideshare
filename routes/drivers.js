@@ -9,6 +9,6 @@ router
   .post(addDriver);
 
 router
-  .route(':driverId/updateLocation')
+  .route('/:driverId/updateLocation')
   .put(updateLocation);
 module.exports = router;

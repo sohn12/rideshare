@@ -9,7 +9,7 @@ router
   .post(addUser);
 
 router
-  .route(':userId/updateLocation')
+  .route('/:userId/updateLocation')
   .put(updateLocation);
 
 module.exports = router;
