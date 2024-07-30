@@ -12,21 +12,21 @@ const RideSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: [true, "Please add a user ID"],
-    unique: true,
+    //unique: true,
     trim: true,
     maxlength: [10, "user ID must be less than 10 chars"],
   },
   driverId: {
     type: String,
-    required: [true, "Please add a driver ID"],
-    unique: true,
+    //required: [true, "Please add a driver ID"],
+    //unique: true,
     trim: true,
     maxlength: [10, "driver ID must be less than 10 chars"],
   },
-  name: {
-    type: String,
-    required: [true, "Please add a name"],
-  },
+  // name: {
+  //   type: String,
+  //   required: [true, "Please add a name"],
+  // },
   startAddress: {
     type: String,
     required: [true, "Please add an address"],
@@ -69,11 +69,16 @@ const RideSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    enum: ['requested', 'accepted', 'declined', 'started', 'completed'],
+    default: 'requested'
+  }
 });
 
 // Geocode & create location
 RideSchema.pre("save", async function (next) {
-  const loc = await geocoder.geocode(this.startAddress);
+  let loc = await geocoder.geocode(this.startAddress);
   this.startLocation = {
     type: "Point",
     coordinates: [loc[0].longitude, loc[0].latitude],
@@ -93,4 +98,16 @@ RideSchema.pre("save", async function (next) {
   next();
 });
 
+
+RideSchema.set('toJSON', {
+  transform: function (doc, ret, options) {
+    if (ret.status !== 'completed') {
+      delete ret.dropOffTime;
+    }
+    if (ret.status !== 'started' || ret.status !== 'completed') {
+      delete ret.pickupTime;
+    }
+    return ret;
+  }
+});
 module.exports = mongoose.model("Ride", RideSchema);
