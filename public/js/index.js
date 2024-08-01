@@ -56,23 +56,22 @@ async function logIn(userId, isDriver) {
     });
 
     const data = await res.json();
-    if(isDriver) {
+    if (isDriver) {
       const user = data.driver;
       setUserCookie(user._id, user.name, true, 1);
     } else {
-      const {user} = data;
+      const { user } = data;
       setUserCookie(user._id, user.name, false, 1);
     }
     onLoad();
   } catch (error) {}
 }
 
-function updateLocation () {
+function updateLocation() {
   const cookie = getUserCookie();
-  if(cookie.isDriver) {
+  if (cookie.isDriver) {
     window.location.href = "update-driver-location.html";
-  }
-  else {
+  } else {
     window.location.href = "update-user-location.html";
   }
 }
@@ -97,16 +96,15 @@ function onLoad() {
   }
 
   if (cookie.isDriver) {
-    document.getElementById("findNearByDrivers").style.display="none";
+    document.getElementById("findNearByDrivers").style.display = "none";
   }
 
-  if(cookie.isAdmin == true) {
-    document.getElementById("addDriver").style.display="inline-block";
-    document.getElementById("addUser").style.display="inline-block";
-  }
-  else {
-    document.getElementById("addDriver").style.display="none";
-    document.getElementById("addUser").style.display="none";
+  if (cookie.isAdmin === "true" || cookie.isAdmin === true) {
+    document.getElementById("addDriver").style.display = "inline-block";
+    document.getElementById("addUser").style.display = "inline-block";
+  } else {
+    document.getElementById("addDriver").style.display = "none";
+    document.getElementById("addUser").style.display = "none";
   }
 }
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+
+    <title>Driver Locator - Add Trips</title>
+</head>
+
+<body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Driver Locator</a>
+        <div class="ml-auto">
+            <span id="user-info" class="mr-3"></span>
+            <button id="login-button" class="btn btn-outline-primary">Log in</button>
+            <button id="logout-button" class="btn btn-outline-danger d-none" onclick="logout()">Log out</button>
+        </div>
+    </header>
+    <div class="container my-3">
+        <h1 class="display-4 text-center">
+            Add Trip
+        </h1>
+
+        <form id="driver-form" class="mb-4">
+            <div class="form-group">
+                <label for="trip-id">tripId</label>
+                <input type="text" id="trip-id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="user-id">userId</label>
+                <input type="text" id="user-id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="driver-id">driverId</label>
+                <input type="text" id="driver-id" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="start-location">startLocation</label>
+                <input type="text" id="start-location" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="end-location">endLocation</label>
+                <input type="text" id="end-location" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="status">status</label>
+                <input type="text" id="status" class="form-control" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="index.html" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+
+    <script src="js/add-trip.js"></script>
+</body>
+
+</html>

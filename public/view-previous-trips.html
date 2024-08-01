@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+        integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <title>Previous Trips</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Previous Trips</a>
+        <div class="ml-auto">
+            <span id="user-info" class="mr-3"></span>
+            <button id="login-button" class="btn btn-outline-primary d-none">Log in</button>
+            <button id="logout-button" class="btn btn-outline-danger" onclick="logOut()">Log out</button>
+        </div>
+    </header>
+    <div class="container my-3">
+        <h1 class="display-4 text-center">
+            <i class="fas fa-map-marked mr-4"></i>Previous Trips
+        </h1>
+        <!-- <button id="view-previous-trips" class="btn btn-success mb-4">View Previous Trips</button> -->
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Pickup Location</th>
+                    <th>Drop Off Location</th>
+                    <th>Pickup Time</th>
+                    <th>Drop Off Time</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="tripsTableBody">
+                <!-- Trip details -->
+            </tbody>
+        </table>
+    </div>
+    <script src="js/previous-trips.js"></script>
+</body>
+
+</html>

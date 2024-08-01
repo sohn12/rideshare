@@ -1,11 +1,11 @@
-const path = require('path');
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db');
+const path = require("path");
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const connectDB = require("./config/db");
 
 // load env vars
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: "./config/config.env" });
 
 // Connect to database
 connectDB();
@@ -19,14 +19,14 @@ app.use(express.json());
 app.use(cors());
 
 // Set static folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.use('/api/v1/login', require('./routes/login'));
-app.use('/api/v1/drivers', require('./routes/drivers'));
-app.use('/api/v1/rides', require('./routes/rides'));
-app.use('/api/v1/users', require('./routes/users'));
-app.use('/api/v1/nearby-drivers', require('./routes/nearby-drivers'));
+app.use("/api/v1/login", require("./routes/login"));
+app.use("/api/v1/drivers", require("./routes/drivers"));
+app.use("/api/v1/rides", require("./routes/rides"));
+app.use("/api/v1/users", require("./routes/users"));
+app.use("/api/v1/nearby-drivers", require("./routes/nearby-drivers"));
 
 const PORT = process.env.PORT || 5000;
 
