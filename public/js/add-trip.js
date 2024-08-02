@@ -8,6 +8,38 @@ const startLocation = document.getElementById("start-location");
 const endLocation = document.getElementById("end-location");
 const tripStatus = document.getElementById("status");
 
+async function fetchUsers() {
+  try {
+    const res = await fetch("/api/v1/users");
+    const users = await res.json();
+    userIdSelect.innerHTML = '<option value="">Select User</option>';
+    users.data.forEach((user) => {
+      const option = document.createElement("option");
+      option.value = user._id;
+      option.textContent = user.name;
+      userIdSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error fetching users:", err);
+  }
+}
+
+async function fetchDrivers() {
+  try {
+    const res = await fetch("/api/v1/drivers");
+    const drivers = await res.json();
+    driverIdSelect.innerHTML = '<option value="">Select Driver</option>';
+    drivers.data.forEach((driver) => {
+      const option = document.createElement("option");
+      option.value = driver._id;
+      option.textContent = driver.driverName;
+      driverIdSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error fetching drivers:", err);
+  }
+}
+
 // Send POST to API to add user
 async function addTrip(e) {
   e.preventDefault();
@@ -54,3 +86,7 @@ async function addTrip(e) {
 }
 
 userForm.addEventListener("submit", addTrip);
+document.addEventListener("DOMContentLoaded", () => {
+  fetchUsers();
+  fetchDrivers();
+});
