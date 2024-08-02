@@ -30,11 +30,11 @@
                 <label for="trip-id">tripId</label>
                 <input type="text" id="trip-id" class="form-control" />
             </div>
-            <div class="form-group">
+            <div class="form-group" id="user">
                 <label for="user-id">User</label>
                 <select id="user-id" class="form-control"></select>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="driver">
                 <label for="driver-id">Driver</label>
                 <select id="driver-id" class="form-control"></select>
             </div>
@@ -48,7 +48,13 @@
             </div>
             <div class="form-group">
                 <label for="status">status</label>
-                <input type="text" id="status" class="form-control" />
+                <select id="status" class="form-control">
+                    <option value="">Select Status</option>
+                    <option value="requested">Requested</option>
+                    <option value="accepted">Accepted</option>
+                    <option value="started">Started</option>
+                    <option value="completed">Completed</option>
+                  </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
             <a href="index.html" class="btn btn-secondary">Back</a>

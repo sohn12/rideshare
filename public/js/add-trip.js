@@ -8,6 +8,35 @@ const startLocation = document.getElementById("start-location");
 const endLocation = document.getElementById("end-location");
 const tripStatus = document.getElementById("status");
 
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == " ") c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
+function onLoad() {
+  const isAdmin = getCookie("isAdmin");
+  if(isAdmin) {
+    fetchDrivers();
+    fetchUsers();
+    return;
+  }
+  const isDriver = getCookie("isDriver");
+  if(isDriver) {
+    document.getElementById("driver").style.display = "none";
+    fetchUsers();
+  }
+  else {
+    document.getElementById("user").style.display = "none";
+    fetchDrivers();
+  }
+}
+
 async function fetchUsers() {
   try {
     const res = await fetch("/api/v1/users");
@@ -44,20 +73,39 @@ async function fetchDrivers() {
 async function addTrip(e) {
   e.preventDefault();
 
-  if (
-    userId.value === "" ||
-    driverId.value === "" ||
-    tripId.value === "" ||
-    startLocation.value === "" ||
-    endLocation.value === "" ||
-    tripStatus.value === ""
-  ) {
-    alert("Please fill in fields");
+  const isAdmin = getCookie("isAdmin");
+  const isDriver = getCookie("isDriver");
+
+  if((isAdmin && userId.value=== "") || (!isAdmin && isDriver && userId.value === "")) {
+    alert("please fill in User Id");
+    return;
+  }
+
+  if((isAdmin && driverId.value=== "") || (!isAdmin && !isDriver && driverId.value === "")) {
+    alert("please fill in Driver Id");
+    return;
+  }
+
+  if(tripId.value === "" || startLocation.value === "" || endLocation.value === "" || tripStatus.value === "") {
+    alert("please fill in all fields");
+    return;
+  }
+
+  let selectedUserId = userId.value;
+  let selectedDriverId = driverId.value;
+
+  userIdFromCookie = getCookie("userid");
+
+  if(!isAdmin && isDriver) {
+    selectedDriverId = userIdFromCookie;
+  }
+  else if(!isAdmin && !isDriver){
+    selectedUserId = userIdFromCookie;
   }
 
   const sendBody = {
-    userId: userId.value,
-    driverId: driverId.value,
+    userId: selectedUserId,
+    driverId: selectedDriverId,
     tripId: tripId.value,
     startAddress: startLocation.value,
     endAddress: endLocation.value,
@@ -66,7 +114,7 @@ async function addTrip(e) {
 
   try {
     const res = await fetch("/api/v1/rides", {
-      method: "POST",
+      method: "POST", 
       headers: {
         "Content-Type": "application/json",
       },
@@ -74,10 +122,13 @@ async function addTrip(e) {
     });
 
     if (res.status === 400) {
-      throw Error("User already exists!");
+      throw Error("Ride already exists!");
     }
 
-    alert("Trip added!");
+    if (res.status === 200) {
+      alert("Trip added!");
+    }
+
     window.location.href = "/index.html";
   } catch (err) {
     alert(err);
@@ -86,7 +137,4 @@ async function addTrip(e) {
 }
 
 userForm.addEventListener("submit", addTrip);
-document.addEventListener("DOMContentLoaded", () => {
-  fetchUsers();
-  fetchDrivers();
-});
+document.addEventListener("DOMContentLoaded", onLoad);
