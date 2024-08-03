@@ -12,6 +12,17 @@ function getCookie(name) {
     return null;
 }
 
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+
 // sends  a put request to update the user location in database
 async function updateDriverLocation (e) {
     e.preventDefault();
@@ -36,6 +47,11 @@ async function updateDriverLocation (e) {
             body: JSON.stringify({address})
         });
         if(res.status == 200) {
+            const users = await fetch(`/api/v1/drivers`);
+            const data = await users.json();
+            const user = data.data.find(u => u._id === userid);
+
+            setCookie("location", JSON.stringify(user.location), 1);
             alert('Driver location updated!');
             window.location.href = '/index.html';
         }
