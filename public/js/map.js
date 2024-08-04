@@ -34,7 +34,7 @@ async function getDrivers() {
         ]
       },
       properties: {
-        driverId: driver.driverId,
+        driverId: driver.driverName,
         icon: 'car'
       }
     };

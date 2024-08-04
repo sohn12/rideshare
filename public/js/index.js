@@ -61,10 +61,10 @@ async function logIn(userId, isDriver, isAdmin) {
     const data = await res.json();
     if (isDriver) {
       const user = data.driver;
-      setUserCookie(user._id, user.name, true, 1, JSON.stringify(user.location), isAdmin);
+      setUserCookie(user._id, user.name, true, 1, isAdmin, JSON.stringify(user.location));
     } else {
       const {user} = data;
-      setUserCookie(user._id, user.name, false, 1, JSON.stringify(user.location), isAdmin);
+      setUserCookie(user._id, user.name, false, 1, isAdmin, JSON.stringify(user.location));
     }
     onLoad();
   } catch (error) {}
