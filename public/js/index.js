@@ -8,11 +8,12 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-function setUserCookie(userid, username, isDriver, days, isAdmin) {
+function setUserCookie(userid, username, isDriver, days, isAdmin, location) {
   setCookie("userid", userid, days);
   setCookie("username", username, days);
   setCookie("isDriver", isDriver, days);
   setCookie("isAdmin", isAdmin, days);
+  setCookie("location", location, days);
 }
 
 function getCookie(name) {
@@ -31,7 +32,8 @@ function getUserCookie() {
   const username = getCookie("username");
   const isDriver = getCookie("isDriver");
   const isAdmin = getCookie("isAdmin");
-  return { userid, username, isDriver, isAdmin };
+  const location = JSON.parse(getCookie("location"));
+  return { userid, username, isDriver, isAdmin, location };
 }
 
 function logOut() {
@@ -39,6 +41,7 @@ function logOut() {
   setCookie("userid", "", -1);
   setCookie("isDriver", "", -1);
   setCookie("isAdmin", "", -1);
+  setCookie("location", "", -1);
   onLoad();
 }
 
@@ -58,10 +61,10 @@ async function logIn(userId, isDriver, isAdmin) {
     const data = await res.json();
     if (isDriver) {
       const user = data.driver;
-      setUserCookie(user._id, user.name, true, 1, isAdmin);
+      setUserCookie(user._id, user.name, true, 1, JSON.stringify(user.location), isAdmin);
     } else {
-      const { user } = data;
-      setUserCookie(user._id, user.name, false, 1, isAdmin);
+      const {user} = data;
+      setUserCookie(user._id, user.name, false, 1, JSON.stringify(user.location), isAdmin);
     }
     onLoad();
   } catch (error) {}
@@ -99,12 +102,14 @@ function onLoad() {
     document.getElementById("findNearByDrivers").style.display = "none";
   }
 
+ 
   if (cookie.isAdmin === "true" || cookie.isAdmin === true) {
-    document.getElementById("addDriver").style.display = "inline-block";
-    document.getElementById("addUser").style.display = "inline-block";
-  } else {
-    document.getElementById("addDriver").style.display = "none";
-    document.getElementById("addUser").style.display = "none";
+    if(document.getElementById("addDriver")) document.getElementById("addDriver").style.display="inline-block";
+    if(document.getElementById("addUser")) document.getElementById("addUser").style.display="inline-block";
+  }
+  else {
+    if(document.getElementById("addDriver")) document.getElementById("addDriver").style.display="none";
+    if(document.getElementById("addUser")) document.getElementById("addUser").style.display="none";
   }
 }
 
