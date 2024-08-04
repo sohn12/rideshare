@@ -6,7 +6,7 @@ const driverIdSelect = document.getElementById("driver-id");
 const tripId = document.getElementById("trip-id");
 const startLocation = document.getElementById("start-location");
 const endLocation = document.getElementById("end-location");
-const tripStatus = document.getElementById("status");
+//const tripStatus = document.getElementById("status");
 
 function getCookie(name) {
   const nameEQ = name + "=";
@@ -86,7 +86,7 @@ async function addTrip(e) {
     return;
   }
 
-  if(tripId.value === "" || startLocation.value === "" || endLocation.value === "" || tripStatus.value === "") {
+  if(tripId.value === "" || startLocation.value === "" || endLocation.value === "") {
     alert("please fill in all fields");
     return;
   }
@@ -109,7 +109,7 @@ async function addTrip(e) {
     tripId: tripId.value,
     startAddress: startLocation.value,
     endAddress: endLocation.value,
-    status: tripStatus.value,
+    //status: tripStatus.value,
   };
 
   try {
