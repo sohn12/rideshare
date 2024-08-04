@@ -20,51 +20,40 @@ function getCookie(name) {
 
 
 async function getDrivers() {
-  const res = await fetch('/api/v1/drivers');
-  const data = await res.json();
   const location = JSON.parse(getCookie("location"));
-  const drivers = data.data.map(driver => {
-    return {
-      type: 'Feature',
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          driver.location.coordinates[0],
-          driver.location.coordinates[1]
-        ]
-      },
-      properties: {
-        driverId: driver.driverName,
-        icon: 'car'
-      }
-    };
-  });
-
-  loadMap(drivers, location.coordinates);
+  loadMap(location.coordinates);
 }
 
 // Load map with drivers
-function loadMap(drivers, location) {
+function loadMap(location) {
   map.setCenter(location);
-  map.on('load', function() {
-    map.addLayer({
-      id: 'points',
-      type: 'symbol',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'FeatureCollection',
-          features: drivers
-        }
+  map.on("load", function() {
+    map.addSource("user", {
+      type: "geojson",
+      data: {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            properties: {},
+            geometry: {
+              type: "Point",
+              coordinates: location,
+            },
+          },
+        ],
       },
-      layout: {
-        'icon-image': '{icon}-15',
-        'icon-size': 1.5,
-        'text-field': '{driverId}',
-        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
-        'text-offset': [0, 0.9],
-        'text-anchor': 'top'
-      }
+    });
+    map.addLayer({
+      id: "circle",
+      type: "circle",
+      source: "user",
+      paint: {
+        "circle-color": "#4264fb",
+        "circle-radius": 8,
+        "circle-stroke-width": 2,
+        "circle-stroke-color": "#ffffff",
+      },
     });
   });
 }

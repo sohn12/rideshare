@@ -86,7 +86,6 @@ async function getNearbyDrivers() {
 // Load map with drivers
 function loadMap(drivers, location) {
   map.setCenter(location);
-  //   map.setStyle("mapbox://styles/mapbox/streets-v12");
   map.on("load", function () {
     map.addLayer({
       id: "points",
