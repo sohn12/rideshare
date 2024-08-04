@@ -74,7 +74,7 @@ async function getNearbyDrivers() {
         ],
       },
       properties: {
-        driverId: driver.driverId,
+        driverId: driver.driverName,
         icon: "car",
       },
     };

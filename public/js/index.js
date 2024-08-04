@@ -8,11 +8,11 @@ function setCookie(name, value, days) {
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
 
-function setUserCookie(userid, username, isDriver, days) {
+function setUserCookie(userid, username, isDriver, days, isAdmin) {
   setCookie("userid", userid, days);
   setCookie("username", username, days);
   setCookie("isDriver", isDriver, days);
-  setCookie("isAdmin", false, days);
+  setCookie("isAdmin", isAdmin, days);
 }
 
 function getCookie(name) {
@@ -42,7 +42,7 @@ function logOut() {
   onLoad();
 }
 
-async function logIn(userId, isDriver) {
+async function logIn(userId, isDriver, isAdmin) {
   try {
     const res = await fetch("/api/v1/login", {
       method: "POST",
@@ -58,10 +58,10 @@ async function logIn(userId, isDriver) {
     const data = await res.json();
     if (isDriver) {
       const user = data.driver;
-      setUserCookie(user._id, user.name, true, 1);
+      setUserCookie(user._id, user.name, true, 1, isAdmin);
     } else {
       const { user } = data;
-      setUserCookie(user._id, user.name, false, 1);
+      setUserCookie(user._id, user.name, false, 1, isAdmin);
     }
     onLoad();
   } catch (error) {}
