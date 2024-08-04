@@ -1,6 +1,5 @@
 const loginForm = document.getElementById('login-form');
 const id = document.getElementById('id');
-// const password = document.getElementById('password');
 
 const onLogin = async (e) => {
     e.preventDefault();

@@ -12,14 +12,11 @@ const RideSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: [true, "Please add a user ID"],
-    //unique: true,
     trim: true,
     maxlength: [50, "user ID must be less than 50 chars"],
   },
   driverId: {
     type: String,
-    //required: [true, "Please add a driver ID"],
-    //unique: true,
     trim: true,
     maxlength: [50, "driver ID must be less than 50 chars"],
   },
